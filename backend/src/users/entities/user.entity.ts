@@ -25,6 +25,12 @@ export class User {
   @Column({ default: true })
   isActive: boolean;
 
+  @Column({ default: false })
+  isEmailVerified: boolean;
+
+  @Column({ type: 'timestamp', nullable: true })
+  emailVerifiedAt?: Date;
+
   @OneToOne(() => Profile)
   @JoinColumn()
   profile: Profile;

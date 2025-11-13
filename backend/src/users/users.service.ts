@@ -11,11 +11,23 @@ export class UsersService {
   ) {}
 
   async findByEmail(email: string): Promise<User | null> {
-    return this.userRepository.findOne({ where: { email } });
+    return this.userRepository.findOne({
+      where: { email },
+    });
   }
 
   async findById(id: string): Promise<User | null> {
-    return this.userRepository.findOne({ where: { id } });
+    return this.userRepository.findOne({
+      where: { id },
+      relations: ['profile'],
+    });
+  }
+
+  async markEmailVerified(id: string): Promise<void> {
+    await this.userRepository.update(id, {
+      isEmailVerified: true,
+      emailVerifiedAt: new Date(),
+    });
   }
 
   async create(
